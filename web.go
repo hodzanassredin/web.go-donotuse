@@ -395,10 +395,9 @@ func (s *Server) initServer() {
     }
 }
 
-func (s *Server) Run(addr string) {
+func (s *Server) Run(addr string, mux *http.ServeMux) {
     s.initServer()
 
-    mux := http.NewServeMux()
     mux.Handle("/", s)
     s.Logger.Printf("web.go serving %s\n", addr)
     err := http.ListenAndServe(addr, mux)
@@ -408,8 +407,8 @@ func (s *Server) Run(addr string) {
 }
 
 //runs the web application and serves http requests
-func Run(addr string) {
-    mainServer.Run(addr)
+func Run(addr string, mux *http.ServeMux) {
+    mainServer.Run(addr, mux)
 }
 
 func (s *Server) RunScgi(addr string) {
